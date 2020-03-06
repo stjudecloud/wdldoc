@@ -31,6 +31,18 @@ jobs:
           poetry install
       - name: Test
         run: |
-          for test in `ls test/end-to-end`; do
-            echo "$test"
+          END_TO_END_DIR="test/end-to-end"
+          for TEST_NAME in `ls $END_TO_END_DIR`; do
+            THIS_TEST_DIR="$END_TO_END_DIR/$TEST_NAME"
+            echo "[*] Running `$THIS_TEST_DIR`"
+
+            # calculate md5 of truth
+            md5sum "$THIS_TEST_DIR/workflow.truth.md >
+            "$THIS_TEST_DIR/workflow.md.md5"
+            
+            # convert WDL to markdown
+            wdldoc workflow.wdl > workflow.md
+
+            # check that converted markdown footprint matches truth
+            md5sum -c workflow.md.md5
           done 
