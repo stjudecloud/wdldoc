@@ -3,8 +3,6 @@
 import argparse
 import logging
 import sys
-from collections import defaultdict
-from typing import DefaultDict, Dict
 
 import logzero
 import WDL as wdl
