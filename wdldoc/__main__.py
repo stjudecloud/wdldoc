@@ -49,6 +49,7 @@ def main() -> None:
         raise RuntimeError("Currently, only workflows are supported.")
 
     workflow = document.workflow
+    parameter_metadata = workflow.parameter_meta
     inputs = classify_inputs(workflow)
 
     print("# Workflow", file=_handle)
@@ -56,8 +57,9 @@ def main() -> None:
     print("## Inputs", file=_handle)
     print("", file=_handle)
     for name, value in inputs["required"].items():
-        print(
-            f"  * {value.name} ({value.type}, **required**):", file=_handle,
-        )
+        message = f"  * `{value.name}` ({value.type}, **required**)"
+        if description := parameter_metadata.get(value.name):
+            message += ": {}".format(description)
+        print(message, file=_handle)
 
     _handle.close()

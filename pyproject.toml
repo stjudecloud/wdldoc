@@ -4,7 +4,7 @@ build-backend = "poetry.masonry.api"
 
 [tool.poetry]
 name = "wdldoc"
-version = "1.0.0-alpha"
+version = "1.0.0-alpha.1"
 description = "Create WDL documentation using Markdown."
 license = "MIT"
 authors = [
@@ -36,6 +36,8 @@ wdldoc = "wdldoc.__main__:main"
 python = "^3.8"
 miniwdl = "^0.7.0"
 logzero = "^1.5.0"
+cachecontrol = {extras = ["filecache"], version = "^0.12.6"}
+requests = "^2.23.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.3.5"
