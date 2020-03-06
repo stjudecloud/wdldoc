@@ -1,31 +1,16 @@
 #!/usr/bin/env python3
 
 import argparse
+import logging
 import sys
 from collections import defaultdict
 from typing import DefaultDict, Dict
 
+import logzero
 import WDL as wdl
 
-
-def classify_inputs(
-    workflow: wdl.Workflow,
-) -> DefaultDict[str, DefaultDict[str, Dict[str, str]]]:
-    results: DefaultDict[str, DefaultDict[str, Dict[str, str]]] = defaultdict(
-        lambda: defaultdict(dict)
-    )
-
-    for b in reversed(list(workflow.available_inputs)):
-        assert isinstance(b, wdl.Env.Binding)
-        var_name, var_value = str(b.name), dict(b.value)
-        if not b.value.expr and not b.value.type.optional:
-            results["required"][var_name] = var_value
-        elif b.value.expr and not b.value.type.optional:
-            results["default"][var_name] = var_value
-        elif b.value.type.optional:
-            results["optional"][var_name] = var_value
-
-    return results
+from . import classify_inputs
+from .miniwdl.sources import read_source
 
 
 def main() -> None:
@@ -36,19 +21,36 @@ def main() -> None:
     parser.add_argument(
         "-o", "--output", help="File to direct output to.", type=str, default=sys.stdout
     )
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        help="Sets the log level to INFO.",
+        default=False,
+        action="store_true",
+    )
+    parser.add_argument(
+        "--debug",
+        help="Sets the log level to DEBUG.",
+        default=False,
+        action="store_true",
+    )
     args = parser.parse_args()
+
+    logzero.loglevel(logging.WARNING)
+    if args.verbose:
+        logzero.loglevel(logging.INFO)
+    if args.debug:
+        logzero.loglevel(logging.DEBUG)
 
     _handle = args.output
     if args.output is not sys.stdout:
         _handle = open(_handle, "w")
 
-    document = wdl.load(args.file)
+    document = wdl.load(args.file, read_source=read_source)
     if not getattr(document, "workflow"):
         raise RuntimeError("Currently, only workflows are supported.")
 
     workflow = document.workflow
-    print(workflow.parameter_meta, file=sys.stderr)
-    print(document.tasks, file=sys.stderr)
     inputs = classify_inputs(workflow)
 
     print("# Workflow", file=_handle)
@@ -57,8 +59,7 @@ def main() -> None:
     print("", file=_handle)
     for name, value in inputs["required"].items():
         print(
-            f"  * {value.get('name')} ({value.get('type')}, **required**):",
-            file=_handle,
+            f"  * {value.name} ({value.type}, **required**):", file=_handle,
         )
 
     _handle.close()
