@@ -40,8 +40,8 @@ jobs:
             md5sum "$THIS_TEST_DIR/workflow.truth.md" > "$THIS_TEST_DIR/workflow.md.md5"
             
             # convert WDL to markdown
-            wdldoc workflow.wdl > workflow.md
+            wdldoc "$THIS_TEST_DIR/workflow.wdl" > "$THIS_TEST_DIR/workflow.md"
 
             # check that converted markdown footprint matches truth
-            md5sum -c workflow.md.md5
+            md5sum -c "$THIS_TEST_DIR/workflow.md.md5"
           done 
