@@ -1,0 +1,43 @@
+[build-system]
+requires = ["poetry>=1.0.5"]
+build-backend = "poetry.masonry.api"
+
+[tool.poetry]
+name = "wdldoc"
+version = "1.0.0-alpha"
+description = "Converts WDL documentation to Markdown for rendering."
+license = "MIT"
+authors = [
+    "Clay McLeod <Clay.McLeod@STJUDE.org>",
+    "Andrew Frantz <Andrew.Frantz@STJUDE.org>"
+]
+readme = "README.md"
+repository = "https://github.com/stjudecloud/wdldoc"
+keywords = [
+    "bioinformatics",
+    "genomics",
+    "workflows",
+    "cromwell"
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Development Status :: 5 - Production/Stable",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+packages = [
+    { include = "wdldoc" }
+]
+
+[tool.poetry.scripts]
+wdldoc = "wdldoc.__main__:main"
+
+[tool.poetry.dependencies]
+python = "3.8"
+miniwdl = "^0.7.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.3.5"
+black = "^19.10b0"
+pylint = "^2.4.4"
+mypy = "^0.761"
