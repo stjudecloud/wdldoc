@@ -1,0 +1,47 @@
+name: CI
+on:
+  push:
+    branches:
+        - master
+  pull_request:
+
+jobs:
+  end-to-end:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: '3.8'
+      - name: Cache Dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.cache/pypoetry/
+          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-
+      - name: Install Dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install setuptools
+          python3 -m pip install poetry==1.0.5
+          poetry config virtualenvs.create false
+          poetry install
+      - name: Test
+        run: |
+          END_TO_END_DIR="test/end-to-end"
+          for TEST_NAME in `ls $END_TO_END_DIR`; do
+            THIS_TEST_DIR="$END_TO_END_DIR/$TEST_NAME"
+            echo "[*] Running $TEST_NAME"
+
+            # calculate md5 of truth
+            md5sum "$THIS_TEST_DIR/workflow.truth.md" > "$THIS_TEST_DIR/workflow.md.md5"
+            
+            # convert WDL to markdown
+            wdldoc "$THIS_TEST_DIR/workflow.wdl" > "$THIS_TEST_DIR/workflow.md"
+
+            # check that converted markdown footprint matches truth
+            md5sum -c "$THIS_TEST_DIR/workflow.md.md5"
+          done 
