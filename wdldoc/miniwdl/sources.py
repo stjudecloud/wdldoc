@@ -1,8 +1,5 @@
 import os
-import tempfile
 from typing import Optional
-from urllib.parse import urljoin, urlsplit
-from urllib.request import urlretrieve
 
 import requests
 import WDL as wdl
