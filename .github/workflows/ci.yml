@@ -34,7 +34,7 @@ jobs:
           END_TO_END_DIR="test/end-to-end"
           for TEST_NAME in `ls $END_TO_END_DIR`; do
             THIS_TEST_DIR="$END_TO_END_DIR/$TEST_NAME"
-            echo "[*] Running `$THIS_TEST_DIR`"
+            echo "[*] Running $TEST_NAME"
 
             # calculate md5 of truth
             md5sum "$THIS_TEST_DIR/workflow.truth.md > "$THIS_TEST_DIR/workflow.md.md5"
