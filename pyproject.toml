@@ -33,7 +33,7 @@ packages = [
 wdldoc = "wdldoc.__main__:main"
 
 [tool.poetry.dependencies]
-python = "3.8"
+python = "^3.8"
 miniwdl = "^0.7.0"
 
 [tool.poetry.dev-dependencies]
