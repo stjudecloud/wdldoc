@@ -37,7 +37,7 @@ jobs:
             echo "[*] Running $TEST_NAME"
 
             # calculate md5 of truth
-            md5sum "$THIS_TEST_DIR/workflow.truth.md > "$THIS_TEST_DIR/workflow.md.md5"
+            md5sum "$THIS_TEST_DIR/workflow.truth.md" > "$THIS_TEST_DIR/workflow.md.md5"
             
             # convert WDL to markdown
             wdldoc workflow.wdl > workflow.md
