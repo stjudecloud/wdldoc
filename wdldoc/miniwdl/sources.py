@@ -1,19 +1,22 @@
 import os
 import tempfile
-import urllib
+from typing import Optional
+from urllib.parse import urljoin, urlsplit
+from urllib.request import urlretrieve
 
 import WDL as wdl
 from logzero import logger
 
 
-async def read_source(uri, path, importer):
+async def read_source(
+    uri: str, path: str, importer: Optional[wdl.Document]
+) -> wdl.ReadSourceResult:
     logger.debug(f"Reading source: {uri}")
     if uri.startswith("http:") or uri.startswith("https:"):
         fn = os.path.join(
-            tempfile.mkdtemp(prefix="wdldoc_"),
-            os.path.basename(urllib.parse.urlsplit(uri).path),
+            tempfile.mkdtemp(prefix="wdldoc_"), os.path.basename(urlsplit(uri).path),
         )
-        urllib.request.urlretrieve(uri, filename=fn)
+        urlretrieve(uri, filename=fn)
         with open(fn, "r") as infile:
             return wdl.ReadSourceResult(infile.read(), uri)
     elif importer and (
@@ -21,7 +24,5 @@ async def read_source(uri, path, importer):
         or importer.pos.abspath.startswith("https:")
     ):
         assert not os.path.isabs(uri), "absolute import from downloaded WDL"
-        return await read_source(
-            urllib.parse.urljoin(importer.pos.abspath, uri), [], importer
-        )
+        return await read_source(urljoin(importer.pos.abspath, uri), "", importer)
     return await wdl.read_source_default(uri, path, importer)
