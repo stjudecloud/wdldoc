@@ -4,8 +4,9 @@ import argparse
 import logging
 import sys
 
-import logzero
 import WDL as wdl
+
+import logzero
 
 from . import classify_inputs
 from .miniwdl.sources import read_source
@@ -57,8 +58,15 @@ def main() -> None:
     print("## Inputs", file=_handle)
     print("", file=_handle)
     for name, value in inputs["required"].items():
-        message = f"  * `{value.name}` ({value.type}, **required**)"
-        if description := parameter_metadata.get(value.name):
+        message = f"  * `{name}` ({value.type}, **required**)"
+        description = parameter_metadata.get(value.name)
+        if description:
+            message += ": {}".format(description)
+        print(message, file=_handle)
+    for name, value in inputs["default"].items():
+        message = f"  * `{name}` ({value.type}, default={value.expr})"
+        description = parameter_metadata.get(value.name)
+        if description:
             message += ": {}".format(description)
         print(message, file=_handle)
 
