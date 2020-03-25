@@ -63,6 +63,12 @@ def main() -> None:
         if description:
             message += ": {}".format(description)
         print(message, file=_handle)
+    for name, value in inputs["optional"].items():
+        message = f"  * `{name}` ({value.type})"
+        description = parameter_metadata.get(value.name)
+        if description:
+            message += ": {}".format(description)
+        print(message, file=_handle)
     for name, value in inputs["default"].items():
         message = f"  * `{name}` ({value.type}, default={value.expr})"
         description = parameter_metadata.get(value.name)
