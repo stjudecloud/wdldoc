@@ -10,6 +10,7 @@ import logzero
 
 from . import classify_inputs
 from .miniwdl.sources import read_source
+from .templates.markdown import MarkDownDoc
 
 
 def main() -> None:
@@ -53,27 +54,13 @@ def main() -> None:
     parameter_metadata = workflow.parameter_meta
     inputs = classify_inputs(workflow)
 
-    print("# Workflow", file=_handle)
-    print("", file=_handle)
-    print("## Inputs", file=_handle)
-    print("", file=_handle)
-    for name, value in inputs["required"].items():
-        message = f"  * `{name}` ({value.type}, **required**)"
-        description = parameter_metadata.get(value.name)
-        if description:
-            message += ": {}".format(description)
-        print(message, file=_handle)
-    for name, value in inputs["optional"].items():
-        message = f"  * `{name}` ({value.type})"
-        description = parameter_metadata.get(value.name)
-        if description:
-            message += ": {}".format(description)
-        print(message, file=_handle)
-    for name, value in inputs["default"].items():
-        message = f"  * `{name}` ({value.type}, default={value.expr})"
-        description = parameter_metadata.get(value.name)
-        if description:
-            message += ": {}".format(description)
-        print(message, file=_handle)
+    doc = MarkDownDoc(workflow.name)
+    doc.generate_frontmatter(document.source_text)
+    doc.generate_inputs(inputs, parameter_metadata)
+    doc.generate_outputs(workflow.effective_outputs)
+    print(doc.title, file=_handle)
+    print(doc.front_matter, file=_handle)
+    print(doc.inputs, file=_handle)
+    print(doc.outputs, file=_handle)
 
     _handle.close()
