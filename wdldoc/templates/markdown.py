@@ -5,20 +5,20 @@ import WDL as wdl
 
 
 class MarkDownDoc:
-    def __init__(self: MarkDownDoc, title: str) -> None:
+    def __init__(self, title: str) -> None:
         self.title = f"# {title}\n"
         self.front_matter = ""
         self.inputs = "## Inputs\n\n"
         self.outputs = "## Outputs\n\n"
         self.todo = "## To Do\n\n"
 
-    def generate_frontmatter(self: MarkDownDoc, source_text: str) -> None:
+    def generate_frontmatter(self, source_text: str) -> None:
         comments = re.findall("^##.*", source_text, re.MULTILINE)
         for comment in comments:
             self.front_matter += comment[3:] + "\n"
 
     def generate_inputs(
-        self: MarkDownDoc,
+        self,
         inputs: DefaultDict[str, DefaultDict[str, wdl.Env.Binding]],
         parameter_metadata: Dict[str, Any],
     ) -> None:
@@ -52,7 +52,7 @@ class MarkDownDoc:
         if self.inputs == "## Inputs\n\n":
             self.inputs += "None\n"
 
-    def generate_outputs(self: MarkDownDoc, outputs: wdl.Env.Bindings) -> None:
+    def generate_outputs(self, outputs: wdl.Env.Bindings) -> None:
         for output in outputs:
             self.outputs += f"  * `{output.name}` ({output.value})\n"
 
