@@ -46,7 +46,24 @@ def main() -> None:
     if args.output is not sys.stdout:
         _handle = open(_handle, "w")
 
-    document = wdl.load(args.file, read_source=read_source)
+    try:
+        document = wdl.load(args.file, read_source=read_source)
+    except wdl.Error.SyntaxError as e:
+        logzero.logger.error(f"{e.__class__.__name__}: {e}")
+        sys.exit(1)
+    except wdl.Error.ValidationError as e:
+        logzero.logger.error(f"{e.__class__.__name__}: {e}")
+        sys.exit(1)
+    except wdl.Error.RuntimeError as e:
+        logzero.logger.error(f"{e.__class__.__name__}: {e}")
+        sys.exit(1)
+    except wdl.Error.ImportError as e:
+        logzero.logger.error(f"{e.__class__.__name__}: {e}")
+        sys.exit(1)
+    except wdl.Error.MultipleValidationErrors as e:
+        logzero.logger.error(f"{e.__class__.__name__}: {e}")
+        sys.exit(1)
+
     if not getattr(document, "workflow"):
         raise RuntimeError("Currently, only workflows are supported.")
 
