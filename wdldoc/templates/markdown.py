@@ -6,11 +6,11 @@ import WDL as wdl
 
 class MarkDownDoc:
     def __init__(self, title: str) -> None:
-        self.title = f"# {title}"
+        self.title = f"# {title}\n"
         self.front_matter = ""
-        self.inputs = "\n## Inputs"
-        self.outputs = "\n## Outputs"
-        self.todo = "\n## To Do"
+        self.inputs = "## Inputs"
+        self.outputs = "## Outputs"
+        self.todo = "## To Do"
 
     def generate_frontmatter(self, source_text: str) -> None:
         comments = re.findall("^##.*", source_text, re.MULTILINE)
@@ -23,7 +23,7 @@ class MarkDownDoc:
         parameter_metadata: Dict[str, Any],
     ) -> None:
         if inputs["required"].items():
-            self.inputs += "\n#### Required"
+            self.inputs += "\n\n#### Required\n"
         for name, value in inputs["required"].items():
             self.inputs += f"\n  * `{name}` ({value.type}, **required**)"
             description = parameter_metadata.get(value.name)
@@ -31,7 +31,7 @@ class MarkDownDoc:
                 self.inputs += ": {}".format(description)
 
         if inputs["optional"].items():
-            self.inputs += "\n#### Optional"
+            self.inputs += "\n\n#### Optional\n"
         for name, value in inputs["optional"].items():
             self.inputs += f"\n  * `{name}` ({value.type})"
             description = parameter_metadata.get(value.name)
@@ -39,17 +39,19 @@ class MarkDownDoc:
                 self.inputs += ": {}".format(description)
 
         if inputs["default"].items():
-            self.inputs += "\n#### Defaults"
+            self.inputs += "\n\n#### Defaults\n"
         for name, value in inputs["default"].items():
             self.inputs += f"\n  * `{name}` ({value.type}, default={value.expr})"
             description = parameter_metadata.get(value.name)
             if description:
                 self.inputs += ": {}".format(description)
+        self.inputs += "\n"
 
         if self.inputs == "## Inputs":
             self.inputs += "\nNone"
 
     def generate_outputs(self, outputs: wdl.Env.Bindings) -> None:
+        self.outputs += "\n"
         for output in outputs:
             self.outputs += f"\n  * `{output.name}` ({output.value})"
 
