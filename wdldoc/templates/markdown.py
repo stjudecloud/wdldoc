@@ -5,8 +5,7 @@ import WDL as wdl
 
 
 class MarkDownDoc:
-    def __init__(self, title: str) -> None:
-        self.title = f"# {title}\n"
+    def __init__(self) -> None:
         self.front_matter = ""
         self.inputs = "## Inputs"
         self.outputs = "## Outputs"

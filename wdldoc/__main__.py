@@ -71,11 +71,10 @@ def main() -> None:
     parameter_metadata = workflow.parameter_meta
     inputs = classify_inputs(workflow)
 
-    doc = MarkDownDoc(workflow.name)
+    doc = MarkDownDoc()
     doc.generate_frontmatter(document.source_text)
     doc.generate_inputs(inputs, parameter_metadata)
     doc.generate_outputs(workflow.effective_outputs)
-    print(doc.title, file=_handle)
     print(doc.front_matter, file=_handle)
     print(doc.inputs, file=_handle)
     print(doc.outputs, file=_handle)
