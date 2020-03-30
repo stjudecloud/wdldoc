@@ -8,16 +8,13 @@ jobs:
   semantic-release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - name: Checkout Repository
+      - uses: actions/checkout@v2
       - uses: codfish/semantic-release-action@v1
         id: semantic
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  pypi:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+
       - name: Setup Python
         uses: actions/setup-python@v1
         with:
