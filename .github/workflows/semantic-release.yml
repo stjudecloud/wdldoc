@@ -1,11 +1,19 @@
-name: Release
+name: Semantic Release
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches:
+      - master
 
 jobs:
+  semantic-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: codfish/semantic-release-action@v1
+        id: semantic
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   pypi:
     runs-on: ubuntu-latest
     steps:
@@ -30,6 +38,7 @@ jobs:
           poetry config virtualenvs.create false
           poetry install
       - name: Build and Publish
+        if: steps.semantic.outputs.new-release-published == 'true'
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
