@@ -1,5 +1,3 @@
-# hello_world
-
 
 ## Inputs
 
