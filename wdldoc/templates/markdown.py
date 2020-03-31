@@ -46,13 +46,13 @@ class MarkDownDoc:
                 self.inputs += ": {}".format(description)
         self.inputs += "\n"
 
-        if self.inputs == "## Inputs":
-            self.inputs += "\nNone"
+        if self.inputs == "## Inputs\n":
+            self.inputs += "\n**None**"
 
     def generate_outputs(self, outputs: wdl.Env.Bindings) -> None:
         self.outputs += "\n"
         for output in outputs:
             self.outputs += f"\n  * `{output.name}` ({output.value})"
 
-        if self.outputs == "## Outputs":
-            self.outputs += "\nNone"
+        if self.outputs == "## Outputs\n":
+            self.outputs += "\n**None**"
