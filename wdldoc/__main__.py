@@ -4,20 +4,23 @@ import argparse
 import logging
 import sys
 
-import WDL as wdl
-
 import logzero
 
-from . import classify_inputs
-from .miniwdl.sources import read_source
-from .templates.markdown import MarkDownDoc
+from .bin.wdldoc import single_file, traverse_directory
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Generate clean WDL documentation from source."
     )
-    parser.add_argument("file", help="Either a WDL tool or a WDL workflow.", type=str)
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument(
+        "directory",
+        nargs="?",
+        help="Top level directory to search for WDL files.",
+        type=str,
+    )
+    group.add_argument("-f", "--file", help="A WDL workflow file.", type=str)
     parser.add_argument(
         "-o", "--output", help="File to direct output to.", type=str, default=sys.stdout
     )
@@ -42,41 +45,10 @@ def main() -> None:
     if args.debug:
         logzero.loglevel(logging.DEBUG)
 
-    _handle = args.output
-    if args.output is not sys.stdout:
-        _handle = open(_handle, "w")
-
-    try:
-        document = wdl.load(args.file, read_source=read_source)
-    except wdl.Error.SyntaxError as e:
-        logzero.logger.error(f"{e.__class__.__name__}: {e}")
-        sys.exit(1)
-    except wdl.Error.ValidationError as e:
-        logzero.logger.error(f"{e.__class__.__name__}: {e}")
-        sys.exit(1)
-    except wdl.Error.RuntimeError as e:
-        logzero.logger.error(f"{e.__class__.__name__}: {e}")
-        sys.exit(1)
-    except wdl.Error.ImportError as e:
-        logzero.logger.error(f"{e.__class__.__name__}: {e}")
-        sys.exit(1)
-    except wdl.Error.MultipleValidationErrors as e:
-        logzero.logger.error(f"{e.__class__.__name__}: {e}")
-        sys.exit(1)
-
-    if not getattr(document, "workflow"):
-        raise RuntimeError("Currently, only workflows are supported.")
-
-    workflow = document.workflow
-    parameter_metadata = workflow.parameter_meta
-    inputs = classify_inputs(workflow)
-
-    doc = MarkDownDoc()
-    doc.generate_frontmatter(document.source_text)
-    doc.generate_inputs(inputs, parameter_metadata)
-    doc.generate_outputs(workflow.effective_outputs)
-    print(doc.front_matter, file=_handle)
-    print(doc.inputs, file=_handle)
-    print(doc.outputs, file=_handle)
-
-    _handle.close()
+    if args.file:
+        output = args.output
+        if args.output is not sys.stdout:
+            output = open(args.output, "w")
+        single_file(args.file, output)
+    else:
+        traverse_directory(args.directory)
