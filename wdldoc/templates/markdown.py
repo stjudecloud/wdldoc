@@ -4,17 +4,25 @@ from typing import Any, DefaultDict, Dict
 import WDL as wdl
 
 
-class MarkDownDoc:
+class MarkDownNode:
     def __init__(self) -> None:
+        self.title = ""
         self.front_matter = ""
-        self.inputs = "## Inputs"
-        self.outputs = "## Outputs"
-        self.todo = "## To Do"
+        self.meta = ""
+        self.inputs = "\n### Inputs"
+        self.outputs = "\n### Outputs"
+
+    def set_title(self, title: str) -> None:
+        self.title = "\n## " + title
 
     def generate_frontmatter(self, source_text: str) -> None:
         comments = re.findall("^##.*", source_text, re.MULTILINE)
         for comment in comments:
             self.front_matter += comment[3:] + "\n"
+
+    def generate_meta(self, meta: Dict[str, Any]) -> None:
+        for key, value in meta.items():
+            self.meta += f"\n{key}\n: {value}\n"
 
     def generate_inputs(
         self,
@@ -44,9 +52,9 @@ class MarkDownDoc:
             description = parameter_metadata.get(value.name)
             if description:
                 self.inputs += ": {}".format(description)
-        self.inputs += "\n"
+        # self.inputs += "\n"
 
-        if self.inputs == "## Inputs\n":
+        if self.inputs == "\n### Inputs":
             self.inputs += "\n**None**"
 
     def generate_outputs(self, outputs: wdl.Env.Bindings) -> None:
@@ -54,5 +62,5 @@ class MarkDownDoc:
         for output in outputs:
             self.outputs += f"\n  * `{output.name}` ({output.value})"
 
-        if self.outputs == "## Outputs\n":
-            self.outputs += "\n**None**"
+        if self.outputs == "\n### Outputs\n":
+            self.outputs += "**None**"

@@ -2,27 +2,30 @@
 
 import argparse
 import logging
-import sys
+import os
 
 import logzero
 
-from .bin.wdldoc import single_file, traverse_directory
+from .bin.wdldoc import parse_file, traverse_directory
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Generate clean WDL documentation from source."
     )
-    group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument(
-        "directory",
-        nargs="?",
-        help="Top level directory to search for WDL files.",
+    parser.add_argument(
+        "sources",
+        nargs="+",
+        help="Top level directories to search for WDL files, "
+        "or the WDL files themselves.",
         type=str,
     )
-    group.add_argument("-f", "--file", help="A WDL workflow file.", type=str)
     parser.add_argument(
-        "-o", "--output", help="File to direct output to.", type=str, default=sys.stdout
+        "-o",
+        "--output_directory",
+        help="Directory to store markdown files.",
+        default="./documentation",
+        type=str,
     )
     parser.add_argument(
         "-v",
@@ -45,10 +48,10 @@ def main() -> None:
     if args.debug:
         logzero.loglevel(logging.DEBUG)
 
-    if args.file:
-        output = args.output
-        if args.output is not sys.stdout:
-            output = open(args.output, "w")
-        single_file(args.file, output)
-    else:
-        traverse_directory(args.directory)
+    for source in args.sources:
+        if os.path.isdir(source):
+            traverse_directory(source, args.output_directory)
+        elif os.path.isfile(source):
+            parse_file(source, args.output_directory)
+        else:
+            raise RuntimeError(f"Could not find {source}.")

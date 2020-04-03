@@ -1,18 +1,19 @@
 from collections import defaultdict
-from typing import DefaultDict
+from typing import DefaultDict, Union
 
 import WDL as wdl
+
 from logzero import logger
 
 
 def classify_inputs(
-    workflow: wdl.Workflow,
+    node: Union[wdl.Workflow, wdl.Task]
 ) -> DefaultDict[str, DefaultDict[str, wdl.Env.Binding]]:
     results: DefaultDict[str, DefaultDict[str, wdl.Env.Binding]] = defaultdict(
         lambda: defaultdict(dict)
     )
 
-    for b in reversed(list(workflow.available_inputs)):
+    for b in reversed(list(node.available_inputs)):
         assert isinstance(b, wdl.Env.Binding)
         var_name, var_value = str(b.name), b.value
         if not b.value.expr and not b.value.type.optional:
