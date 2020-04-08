@@ -38,6 +38,7 @@ miniwdl = "^0.7.0"
 logzero = "^1.5.0"
 cachecontrol = {extras = ["filecache"], version = "^0.12.6"}
 requests = "^2.23.0"
+python-semantic-release = "^5.1.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.3.5"
@@ -45,3 +46,11 @@ black = "^19.10b0"
 pylint = "^2.4.4"
 mypy = "^0.761"
 twine = "^3.1.1"
+
+[tool.semantic_release]
+version_variable = "pyproject.toml:version"
+version_source = "commit"
+commit_subject = "chore: bumping version to v{version}"
+commit_message = ""
+commit_author = "St. Jude Cloud <support@stjude.cloud>"
+# check_build_status = true
