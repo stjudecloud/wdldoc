@@ -32,17 +32,6 @@ jobs:
       - name: Test
         run: |
           END_TO_END_DIR="test/end-to-end"
-          for TEST_NAME in `ls $END_TO_END_DIR`; do
-            THIS_TEST_DIR="$END_TO_END_DIR/$TEST_NAME"
-            echo "[*] Running $TEST_NAME"
-
-            # calculate md5 of truth
-            cp "$THIS_TEST_DIR/workflow.truth.md" "$THIS_TEST_DIR/workflow.md"
-            md5sum "$THIS_TEST_DIR/workflow.md" > "$THIS_TEST_DIR/workflow.md.md5"
-
-            # convert WDL to markdown
-            wdldoc -f "$THIS_TEST_DIR/workflow.wdl" -o "$THIS_TEST_DIR/workflow.md"
-
-            # check that converted markdown footprint matches truth
-            md5sum -c "$THIS_TEST_DIR/workflow.md.md5"
-          done
+          md5sum $(find $END_TO_END_DIR/truth -type f -name "*.md") > $END_TO_END_DIR/truth.md5
+          wdldoc $END_TO_END_DIR -o $END_TO_END_DIR/truth
+          md5sum -c "$END_TO_END_DIR/truth.md5"
