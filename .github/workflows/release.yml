@@ -1,21 +1,29 @@
-name: Semantic Release
+name: Release
 on:
   push:
-    branches:
-      - master
+    tags:
+      - 'v*'
 
 jobs:
-  semantic-release:
+  create-release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-      - name: Semantic Release
-        uses: codfish/semantic-release-action@v1
-        id: semantic
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+            node-version: '13.x'
+      - name: Install Dependencies
+        run: npm install -g conventional-github-releaser
+      - name: Run Releaser
+        run: conventional-github-releaser -p angular
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+            DEBUG: conventional-github-releaser
+            CONVENTIONAL_GITHUB_RELEASER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  pypi:
+    runs-on: ubuntu-latest
+    steps:
       - name: Setup Python
         uses: actions/setup-python@v1
         with:
@@ -38,7 +46,6 @@ jobs:
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
-        if: steps.semantic.outputs.new-release-published == 'true'
         run: |
           poetry build
           twine upload dist/*
