@@ -49,7 +49,7 @@ twine = "^3.1.1"
 
 [tool.semantic_release]
 version_variable = "pyproject.toml:version"
-version_source = "commit"
+version_source = "tag"
 commit_subject = "chore: bumping version to v{version}"
 commit_message = ""
 commit_author = "St. Jude Cloud <support@stjude.cloud>"
