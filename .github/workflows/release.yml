@@ -33,5 +33,7 @@ jobs:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
         run: |
+          git config --local user.email "support@stjude.cloud"
+          git config --local user.name "St. Jude Cloud"
           poetry build
           semantic-release publish
