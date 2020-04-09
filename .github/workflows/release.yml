@@ -28,9 +28,11 @@ jobs:
           python3 -m pip install poetry==1.0.5
           poetry config virtualenvs.create false
           poetry install
-      - name: Publish
-        uses: relekang/python-semantic-release@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          pypi_username: "token"
-          pypi_password: ${{ secrets.PYPI_TOKEN }}
+      - name: Build and Publish
+        env:
+          PYPI_USERNAME: __token__
+          PYPI_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+        run: |
+          git config --local user.email "support@stjude.cloud"
+          git config --local user.name "St. Jude Cloud"
+          semantic-release publish
