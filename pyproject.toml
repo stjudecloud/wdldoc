@@ -4,7 +4,7 @@ build-backend = "poetry.masonry.api"
 
 [tool.poetry]
 name = "wdldoc"
-version = "1.3.4"
+version = "1.3.5"
 description = "Create WDL documentation using Markdown."
 license = "MIT"
 authors = [
