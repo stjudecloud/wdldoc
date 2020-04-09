@@ -54,4 +54,5 @@ commit_subject = "chore: bumping version to v{version}"
 commit_message = ""
 commit_author = "St. Jude Cloud <support@stjude.cloud>"
 build_command = "poetry build"
+upload_to_release = "false"
 # check_build_status = true
