@@ -28,22 +28,9 @@ jobs:
           python3 -m pip install poetry==1.0.5
           poetry config virtualenvs.create false
           poetry install
-      - name: Build and Publish
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
-        run: |
-          git config --local user.email "support@stjude.cloud"
-          git config --local user.name "St. Jude Cloud"
-          semantic-release publish
-      - name: Setup Node
-        uses: actions/setup-node@v1
+      - name: Publish
+        uses: relekang/python-semantic-release@v4
         with:
-            node-version: '13.x'
-      - name: Install Dependencies
-        run: npm install -g conventional-github-releaser
-      - name: Run Releaser
-        run: conventional-github-releaser -p angular
-        env:
-            DEBUG: conventional-github-releaser
-            CONVENTIONAL_GITHUB_RELEASER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          pypi_username: "token"
+          pypi_password: ${{ secrets.PYPI_TOKEN }}
