@@ -30,6 +30,7 @@ jobs:
           poetry install
       - name: Build and Publish
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PYPI_USERNAME: __token__
           PYPI_PASSWORD: ${{ secrets.PYPI_TOKEN }}
         run: |
