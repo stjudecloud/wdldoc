@@ -44,7 +44,7 @@ jobs:
           git config --local user.name "St. Jude Cloud"
           semantic-release publish
       - name: Run Releaser
-        run: conventional-github-releaser -p angular
+        run: conventional-github-releaser -p angular || exit 0
         env:
           DEBUG: conventional-github-releaser
           CONVENTIONAL_GITHUB_RELEASER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
