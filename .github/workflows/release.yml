@@ -10,6 +10,17 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+            node-version: '13.x'
+      - name: Install Dependencies
+        run: npm install -g conventional-github-releaser
+      - name: Run Releaser
+        run: conventional-github-releaser -p angular
+        env:
+            DEBUG: conventional-github-releaser
+            CONVENTIONAL_GITHUB_RELEASER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup Python
         uses: actions/setup-python@v1
         with:
@@ -35,5 +46,4 @@ jobs:
         run: |
           git config --local user.email "support@stjude.cloud"
           git config --local user.name "St. Jude Cloud"
-          poetry build
           semantic-release publish
