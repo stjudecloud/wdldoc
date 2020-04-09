@@ -29,7 +29,7 @@ jobs:
           poetry config virtualenvs.create false
           poetry install
       - name: Publish
-        uses: relekang/python-semantic-release@v4
+        uses: relekang/python-semantic-release@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           pypi_username: "token"
