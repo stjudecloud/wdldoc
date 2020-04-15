@@ -13,7 +13,7 @@ class MarkDownNode:
         self.outputs = "\n### Outputs"
 
     def set_title(self, title: str) -> None:
-        self.title = "\n## " + title
+        self.title = "\n## " + title + "\n"
 
     def generate_frontmatter(self, source_text: str) -> None:
         comments = re.findall("^##.*", source_text, re.MULTILINE)
@@ -52,10 +52,11 @@ class MarkDownNode:
             description = parameter_metadata.get(value.name)
             if description:
                 self.inputs += ": {}".format(description)
-        # self.inputs += "\n"
 
         if self.inputs == "\n### Inputs":
-            self.inputs += "\n**None**"
+            self.inputs += "\n**None**\n"
+        else:
+            self.inputs += "\n"
 
     def generate_outputs(self, outputs: wdl.Env.Bindings) -> None:
         self.outputs += "\n"
@@ -63,4 +64,6 @@ class MarkDownNode:
             self.outputs += f"\n  * `{output.name}` ({output.value})"
 
         if self.outputs == "\n### Outputs\n":
-            self.outputs += "**None**"
+            self.outputs += "**None**\n"
+        else:
+            self.outputs += "\n"

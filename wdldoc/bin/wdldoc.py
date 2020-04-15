@@ -26,20 +26,20 @@ def document_workflow(document: wdl.Document, output: TextIO) -> None:
     doc = MarkDownNode()
     doc.generate_frontmatter(document.source_text)
     document_node(document.workflow, doc)
-    print(doc.front_matter, file=output)
-    print(doc.title, file=output)
-    print(doc.meta, file=output)
-    print(doc.inputs, file=output)
-    print(doc.outputs, file=output)
+    print(doc.front_matter, end="", file=output)
+    print(doc.title, end="", file=output)
+    print(doc.meta, end="", file=output)
+    print(doc.inputs, end="", file=output)
+    print(doc.outputs, end="", file=output)
 
 
 def document_task(task: wdl.Task, output: TextIO) -> None:
     doc = MarkDownNode()
     document_node(task, doc)
-    print(doc.title, file=output)
-    print(doc.meta, file=output)
-    print(doc.inputs, file=output)
-    print(doc.outputs, file=output)
+    print(doc.title, end="", file=output)
+    print(doc.meta, end="", file=output)
+    print(doc.inputs, end="", file=output)
+    print(doc.outputs, end="", file=output)
 
 
 def parse_file(file: str, outdir: str, fast_fail: bool = False) -> None:
@@ -89,7 +89,7 @@ def parse_file(file: str, outdir: str, fast_fail: bool = False) -> None:
         output = open(new_filename, "w")
         doc = MarkDownNode()
         doc.generate_frontmatter(document.source_text)
-        print(doc.front_matter, file=output)
+        print(doc.front_matter, end="", file=output)
         for task in document.tasks:
             document_task(task, output)
         output.close()
