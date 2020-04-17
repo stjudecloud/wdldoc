@@ -8,7 +8,7 @@ import WDL as wdl
 class MarkDownNode:
     def __init__(self) -> None:
         self.title = ""
-        self.front_matter = ""
+        self.header = ""
         self.meta = ""
         self.inputs = "\n### Inputs"
         self.outputs = "\n### Outputs"
@@ -16,10 +16,10 @@ class MarkDownNode:
     def set_title(self, title: str) -> None:
         self.title = "\n## " + title + "\n"
 
-    def generate_frontmatter(self, source_text: str) -> None:
+    def generate_header(self, source_text: str) -> None:
         comments = re.findall("^##.*", source_text, re.MULTILINE)
         for comment in comments:
-            self.front_matter += comment[3:] + "\n"
+            self.header += comment[3:] + "\n"
 
     def generate_meta(self, meta: Dict[str, Any]) -> None:
         for key, value in meta.items():

@@ -28,9 +28,9 @@ def document_workflow(
     document: wdl.Document, output: TextIO, keys: Dict[str, str]
 ) -> None:
     doc = MarkDownNode()
-    doc.generate_frontmatter(document.source_text)
+    doc.generate_header(document.source_text)
     document_node(document.workflow, doc, keys)
-    print(doc.front_matter, end="", file=output)
+    print(doc.header, end="", file=output)
     print(doc.title, end="", file=output)
     print(doc.meta, end="", file=output)
     print(doc.inputs, end="", file=output)
@@ -94,8 +94,8 @@ def parse_file(
         pathlib.Path(os.path.dirname(new_filename)).mkdir(parents=True, exist_ok=True)
         output = open(new_filename, "w")
         doc = MarkDownNode()
-        doc.generate_frontmatter(document.source_text)
-        print(doc.front_matter, end="", file=output)
+        doc.generate_header(document.source_text)
+        print(doc.header, end="", file=output)
         for task in document.tasks:
             document_task(task, output, keys)
         output.close()
