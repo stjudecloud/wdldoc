@@ -23,8 +23,26 @@ def main() -> None:
     parser.add_argument(
         "-o",
         "--output_directory",
-        help="Directory to store markdown files.",
+        help="Directory to store markdown files. Default is `./documentation`",
         default="./documentation",
+        type=str,
+    )
+    parser.add_argument(
+        "-d",
+        "--description",
+        help="If parameter meta fields use a JSON object, the key "
+        "for the field containing the input description. "
+        "Default is 'help'. Ignored if only strings are used.",
+        default="help",
+        type=str,
+    )
+    parser.add_argument(
+        "-c",
+        "--choices",
+        help="If parameter meta fields use a JSON object, the key "
+        "for the field containing the input choices. "
+        "Default is 'choices'. Ignored if only strings are used.",
+        default="choices",
         type=str,
     )
     parser.add_argument(
@@ -48,10 +66,12 @@ def main() -> None:
     if args.debug:
         logzero.loglevel(logging.DEBUG)
 
+    keys = {"description": args.description, "choices": args.choices}
+
     for source in args.sources:
         if os.path.isdir(source):
-            traverse_directory(source, args.output_directory)
+            traverse_directory(source, args.output_directory, keys)
         elif os.path.isfile(source):
-            parse_file(source, args.output_directory)
+            parse_file(source, args.output_directory, keys)
         else:
             raise RuntimeError(f"Could not find {source}.")

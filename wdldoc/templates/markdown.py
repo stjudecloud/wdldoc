@@ -1,3 +1,4 @@
+import json
 import re
 from typing import Any, DefaultDict, Dict
 
@@ -24,10 +25,24 @@ class MarkDownNode:
         for key, value in meta.items():
             self.meta += f"\n{key}\n: {value}\n"
 
+    def _parse_description(self, description: str, keys: Dict[str, str]) -> None:
+        if isinstance(description, str):
+            self.inputs += ": {}".format(description)
+            return
+        if keys["description"] in description:
+            self.inputs += ": {}".format(description[keys["description"]])
+            del description[keys["description"]]
+            if keys["choices"] in description:
+                self.inputs += "; **Choices**: {}".format(description[keys["choices"]])
+                del description[keys["choices"]]
+        for key in description:
+            self.inputs += "; **{}**: {}".format(key, description[key])
+
     def generate_inputs(
         self,
         inputs: DefaultDict[str, DefaultDict[str, wdl.Env.Binding]],
         parameter_metadata: Dict[str, Any],
+        keys: Dict[str, str],
     ) -> None:
         if inputs["required"].items():
             self.inputs += "\n\n#### Required\n"
@@ -35,7 +50,7 @@ class MarkDownNode:
             self.inputs += f"\n  * `{name}` ({value.type}, **required**)"
             description = parameter_metadata.get(value.name)
             if description:
-                self.inputs += ": {}".format(description)
+                self._parse_description(description, keys)
 
         if inputs["optional"].items():
             self.inputs += "\n\n#### Optional\n"
@@ -43,7 +58,7 @@ class MarkDownNode:
             self.inputs += f"\n  * `{name}` ({value.type})"
             description = parameter_metadata.get(value.name)
             if description:
-                self.inputs += ": {}".format(description)
+                self._parse_description(description, keys)
 
         if inputs["default"].items():
             self.inputs += "\n\n#### Defaults\n"
@@ -51,7 +66,7 @@ class MarkDownNode:
             self.inputs += f"\n  * `{name}` ({value.type}, default={value.expr})"
             description = parameter_metadata.get(value.name)
             if description:
-                self.inputs += ": {}".format(description)
+                self._parse_description(description, keys)
 
         if self.inputs == "\n### Inputs":
             self.inputs += "\n**None**\n"
