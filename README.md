@@ -17,6 +17,8 @@
 
 ## 📚 Getting Started
 
+For an example of what the results can look like, check out the [GitHub Pages](https://stjudecloud.github.io/workflows/) for the [St Jude Cloud Workflows](https://github.com/stjudecloud/workflows) repo! The documentation is automatically built for each release using `wdldoc`.
+
 ### Installation
 
 wdldoc is only available for Python 3.8 or higher.
@@ -39,7 +41,7 @@ Any strings found in meta fields will be treated as Markdown, so feel free to ad
 
 If there's any information you want to include for a file that doesn't fit into a meta field of one of it's tasks or workflows, you can include a header section of your WDL file, and we'll convert it to Markdown and prepend it to the documentation. This is a good place to document the uses for the file and any licensing information. Simply start a line with `## ` and the rest of the line will be parsed as Markdown. You can include as many header lines you want, and they will be treated as one block. It's good practice to break up the header into sections using Markdown titles.
 
-```
+```text
 usage: wdldoc [-h] [-o OUTPUT_DIRECTORY] [-d DESCRIPTION] [-c CHOICES] [-v] [--debug] sources [sources ...]
 
 Generate clean WDL documentation from source.
@@ -64,7 +66,7 @@ wdldoc will recursively search the input directories searching for all `.wdl` fi
 
 WDL `parameter_meta` info can be anything that conforms to the WDL spec, but we recommend one of two formats. The first is simply `input_name: "descriptive string"`. The other is a JSON object containing a description key with a string value and optionally a choices key with a list of options. The value of the "description" and "choices" keys can be specified with the `--description` and `--choices` arguments. Below is an example of both formats in one parameter meta block.
 
-```
+```text
 parameter_meta {
     in_bams: {
         help: "Provide bams to run for comparison"
@@ -100,7 +102,8 @@ pre-commit install --hook-type commit-msg
 
 ## 📝 License
 
-Copyright © 2020 [St. Jude Cloud Team](https://github.com/stjudecloud).<br />
+Copyright © 2020 [St. Jude Cloud Team](https://github.com/stjudecloud).
+
 This project is [MIT][license-md] licensed.
 
 [contributing-md]: https://github.com/stjudecloud/wdldoc/blob/master/CONTRIBUTING.md
