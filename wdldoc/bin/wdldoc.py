@@ -4,9 +4,8 @@ import pathlib
 import sys
 from typing import Dict, TextIO, Union
 
-import WDL as wdl
-
 import logzero
+import WDL as wdl
 
 from .. import classify_inputs
 from ..miniwdl.sources import read_source
@@ -103,7 +102,7 @@ def parse_file(
         logzero.logger.warning(f"{file} has no task or workflow definitions.")
 
 
-def traverse_directory(dir: str, outdir: str, keys: Dict[str, str]) -> None:
-    files = glob.glob(dir + f"{os.path.sep}**{os.path.sep}*.wdl", recursive=True)
+def traverse_directory(indir: str, outdir: str, keys: Dict[str, str]) -> None:
+    files = glob.glob(indir + f"{os.path.sep}**{os.path.sep}*.wdl", recursive=True)
     for file in files:
         parse_file(file, outdir, keys)
