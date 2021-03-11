@@ -6,8 +6,8 @@
 
 #### Required
 
-  * `name` (String, **required**): Name to address
   * `message` (String, **required**): Message to print
+  * `name` (String, **required**): Name to address
 
 ### Outputs
 

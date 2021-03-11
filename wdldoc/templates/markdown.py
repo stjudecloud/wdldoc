@@ -1,5 +1,5 @@
 import re
-from typing import Any, DefaultDict, Dict
+from typing import Any, DefaultDict, Dict, Union
 
 import WDL as wdl
 
@@ -24,7 +24,9 @@ class MarkDownNode:
         for key, value in meta.items():
             self.meta += f"\n{key}\n: {value}\n"
 
-    def _parse_description(self, description: str, keys: Dict[str, str]) -> None:
+    def _parse_description(
+        self, description: Union[str, Any], keys: Dict[str, str]
+    ) -> None:
         if isinstance(description, str):
             self.inputs += ": {}".format(description)
             return
@@ -45,7 +47,9 @@ class MarkDownNode:
     ) -> None:
         if inputs["required"].items():
             self.inputs += "\n\n#### Required\n"
-        for name, value in inputs["required"].items():
+        for name, value in sorted(
+            inputs["required"].items(), key=lambda i: (i[0].count("."), i[0])
+        ):
             self.inputs += f"\n  * `{name}` ({value.type}, **required**)"
             description = parameter_metadata.get(value.name)
             if description:
@@ -53,7 +57,9 @@ class MarkDownNode:
 
         if inputs["optional"].items():
             self.inputs += "\n\n#### Optional\n"
-        for name, value in inputs["optional"].items():
+        for name, value in sorted(
+            inputs["optional"].items(), key=lambda i: (i[0].count("."), i[0])
+        ):
             self.inputs += f"\n  * `{name}` ({value.type})"
             description = parameter_metadata.get(value.name)
             if description:
@@ -61,7 +67,9 @@ class MarkDownNode:
 
         if inputs["default"].items():
             self.inputs += "\n\n#### Defaults\n"
-        for name, value in inputs["default"].items():
+        for name, value in sorted(
+            inputs["default"].items(), key=lambda i: (i[0].count("."), i[0])
+        ):
             self.inputs += f"\n  * `{name}` ({value.type}, default={value.expr})"
             description = parameter_metadata.get(value.name)
             if description:

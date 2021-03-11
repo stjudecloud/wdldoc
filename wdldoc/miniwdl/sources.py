@@ -1,12 +1,11 @@
 import os
-from typing import Optional
+from typing import Any, Optional
 
 import requests
 import WDL as wdl
-from logzero import logger
-
 from cachecontrol import CacheControl
 from cachecontrol.caches import FileCache
+from logzero import logger
 
 # though `forever` is set, this is still invalidated
 # if the ETag does not match (meaning the file underneath)
