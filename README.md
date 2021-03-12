@@ -39,7 +39,7 @@ Any valid WDL file will have the inputs, outputs, and meta information individua
 
 Any strings found in meta fields will be treated as Markdown, so feel free to add custom bolding, italicizing, code snippets, etc.
 
-If there's any information you want to include for a file that doesn't fit into a meta field of one of it's tasks or workflows, you can include a header section of your WDL file, and we'll convert it to Markdown and prepend it to the documentation. This is a good place to document the uses for the file and any licensing information. Simply start a line with `## ` and the rest of the line will be parsed as Markdown. You can include as many header lines you want, and they will be treated as one block. It's good practice to break up the header into sections using Markdown titles.
+If there's any information you want to include for a file that doesn't fit into a meta field of one of it's tasks or workflows, you can include a header section of your WDL file, and we'll convert it to Markdown and prepend it to the documentation. This is a good place to document the uses for the file and any licensing information. Simply start a line with `##` followed by a space, and the rest of the line will be parsed as Markdown. There's no limit to the number of header lines. It's good practice to break up the header into sections using Markdown titles.
 
 ```text
 usage: wdldoc [-h] [-o OUTPUT_DIRECTORY] [-d DESCRIPTION] [-c CHOICES] [-v] [--debug] sources [sources ...]
