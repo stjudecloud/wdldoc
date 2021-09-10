@@ -34,7 +34,7 @@ wdldoc = "wdldoc.__main__:main"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-miniwdl = "^0.7.0"
+miniwdl = "^1.2.2"
 logzero = "^1.5.0"
 cachecontrol = {extras = ["filecache"], version = "^0.12.6"}
 requests = "^2.23.0"
