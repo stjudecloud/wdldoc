@@ -19,7 +19,7 @@ test = ["coverage", "flake8", "pexpect", "wheel"]
 
 [[package]]
 name = "astroid"
-version = "2.7.3"
+version = "2.8.6"
 description = "An abstract syntax tree for Python with inference support."
 category = "dev"
 optional = false
@@ -27,7 +27,8 @@ python-versions = "~=3.6"
 
 [package.dependencies]
 lazy-object-proxy = ">=1.4.0"
-wrapt = ">=1.11,<1.13"
+typing-extensions = {version = ">=3.10", markers = "python_version < \"3.10\""}
+wrapt = ">=1.11,<1.14"
 
 [[package]]
 name = "atomicwrites"
@@ -541,19 +542,20 @@ python-versions = "*"
 
 [[package]]
 name = "pylint"
-version = "2.10.2"
+version = "2.11.1"
 description = "python code static checker"
 category = "dev"
 optional = false
 python-versions = "~=3.6"
 
 [package.dependencies]
-astroid = ">=2.7.2,<2.8"
+astroid = ">=2.8.0,<2.9"
 colorama = {version = "*", markers = "sys_platform == \"win32\""}
 isort = ">=4.2.5,<6"
 mccabe = ">=0.6,<0.7"
 platformdirs = ">=2.2.0"
 toml = ">=0.7.1"
+typing-extensions = {version = ">=3.10.0", markers = "python_version < \"3.10\""}
 
 [[package]]
 name = "pyparsing"
@@ -926,7 +928,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "8a21ee4e7063890a88c855e769ad2bb97fbc1e1e32c8ad79f69d1c8d6aad1c5b"
+content-hash = "5d6659df8a33ecbfca02add4847f62fdc15c485bfb4722ce540a3eb1dd041dc7"
 
 [metadata.files]
 appdirs = [
@@ -938,8 +940,8 @@ argcomplete = [
     {file = "argcomplete-1.12.3.tar.gz", hash = "sha256:2c7dbffd8c045ea534921e63b0be6fe65e88599990d8dc408ac8c542b72a5445"},
 ]
 astroid = [
-    {file = "astroid-2.7.3-py3-none-any.whl", hash = "sha256:dc1e8b28427d6bbef6b8842b18765ab58f558c42bb80540bd7648c98412af25e"},
-    {file = "astroid-2.7.3.tar.gz", hash = "sha256:3b680ce0419b8a771aba6190139a3998d14b413852506d99aff8dc2bf65ee67c"},
+    {file = "astroid-2.8.6-py3-none-any.whl", hash = "sha256:cd8326b424c971e7d87678609cf6275d22028afd37d6ac59c16d47f1245882f6"},
+    {file = "astroid-2.8.6.tar.gz", hash = "sha256:5f6f75e45f15290e73b56f9dfde95b4bf96382284cde406ef4203e928335a495"},
 ]
 atomicwrites = [
     {file = "atomicwrites-1.4.0-py2.py3-none-any.whl", hash = "sha256:6d1784dea7c0c8d4a5172b6c620f40b6e4cbfdf96d783691f2e1302a7b88e197"},
@@ -1248,8 +1250,8 @@ pygtail = [
     {file = "pygtail-0.11.1.tar.gz", hash = "sha256:3af0825e7a5bb30af1798ed0a3d14f9a1cd7aa21b0e3f4430780f3ee3a09f3d7"},
 ]
 pylint = [
-    {file = "pylint-2.10.2-py3-none-any.whl", hash = "sha256:e178e96b6ba171f8ef51fbce9ca30931e6acbea4a155074d80cc081596c9e852"},
-    {file = "pylint-2.10.2.tar.gz", hash = "sha256:6758cce3ddbab60c52b57dcc07f0c5d779e5daf0cf50f6faacbef1d3ea62d2a1"},
+    {file = "pylint-2.11.1-py3-none-any.whl", hash = "sha256:0f358e221c45cbd4dad2a1e4b883e75d28acdcccd29d40c76eb72b307269b126"},
+    {file = "pylint-2.11.1.tar.gz", hash = "sha256:2c9843fff1a88ca0ad98a256806c82c5a8f86086e7ccbdb93297d86c3f90c436"},
 ]
 pyparsing = [
     {file = "pyparsing-2.4.7-py2.py3-none-any.whl", hash = "sha256:ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"},

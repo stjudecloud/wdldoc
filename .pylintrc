@@ -68,8 +68,9 @@ load-plugins=
 # W0621: Redefining name 'FOO' from outer scope (line NN)
 # W0622: Redefining built-in 'FOO'
 # W0702: No exception type(s) specified
+# W1203: Use lazy % or % formatting in logging functions
 #
-disable=C0103,C0111,C0301,C0302,E1103,I0011,R0201,R0801,R0902,R0903,R0904,R0911,R0912,R0913,R0914,R0915,W0141,W0142,W0232,W0401,W0603,W0614,W0621,W0622,W0702,W0703,W1201,E1121,W0511,C0330
+disable=C0103,C0111,C0301,C0302,E1103,I0011,R0201,R0801,R0902,R0903,R0904,R0911,R0912,R0913,R0914,R0915,W0141,W0142,W0232,W0401,W0603,W0614,W0621,W0622,W0702,W0703,W1201,E1121,W0511,C0330,W1203
 
 
 [REPORTS]
@@ -288,4 +289,4 @@ overgeneral-exceptions=Exception
 [LOGGING]
 # Format style used to check logging format string.
 
-logging-format-style=fstr
+logging-format-style=new

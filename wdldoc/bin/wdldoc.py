@@ -83,7 +83,7 @@ def parse_file(
     if getattr(document, "workflow"):
         new_filename = os.path.join(outdir, "workflows", outfile_basename)
         pathlib.Path(os.path.dirname(new_filename)).mkdir(parents=True, exist_ok=True)
-        output = open(new_filename, "w")
+        output = open(new_filename, mode="w", encoding="utf-8")
         document_workflow(document, output, keys)
         for task in document.tasks:
             document_task(task, output, keys)
@@ -91,7 +91,7 @@ def parse_file(
     elif getattr(document, "tasks"):
         new_filename = os.path.join(outdir, "tasks", outfile_basename)
         pathlib.Path(os.path.dirname(new_filename)).mkdir(parents=True, exist_ok=True)
-        output = open(new_filename, "w")
+        output = open(new_filename, mode="w", encoding="utf-8") # pylint: disable=R1732
         doc = MarkDownNode()
         doc.generate_header(document.source_text)
         print(doc.header, end="", file=output)
