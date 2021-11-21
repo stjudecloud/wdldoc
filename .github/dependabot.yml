@@ -4,3 +4,6 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    assignees:
+      - "a-frantz"
+      - "claymcleod"
