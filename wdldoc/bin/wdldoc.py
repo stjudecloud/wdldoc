@@ -91,7 +91,7 @@ def parse_file(
     elif getattr(document, "tasks"):
         new_filename = os.path.join(outdir, "tasks", outfile_basename)
         pathlib.Path(os.path.dirname(new_filename)).mkdir(parents=True, exist_ok=True)
-        output = open(new_filename, mode="w", encoding="utf-8") # pylint: disable=R1732
+        output = open(new_filename, mode="w", encoding="utf-8")  # pylint: disable=R1732
         doc = MarkDownNode()
         doc.generate_header(document.source_text)
         print(doc.header, end="", file=output)
