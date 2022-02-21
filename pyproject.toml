@@ -46,7 +46,7 @@ black = "^21.12b0"
 pylint = "^2.12.2"
 mypy = "^0.910"
 twine = "^3.7.1"
-types-requests = "^2.26.2"
+types-requests = "^2.27.10"
 
 [tool.semantic_release]
 version_variable = "pyproject.toml:version"
