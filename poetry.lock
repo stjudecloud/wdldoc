@@ -627,7 +627,7 @@ python-versions = ">=3.5"
 
 [[package]]
 name = "python-semantic-release"
-version = "7.23.0"
+version = "7.25.0"
 description = "Automatic Semantic Versioning for Python projects"
 category = "main"
 optional = false
@@ -1304,8 +1304,8 @@ python-json-logger = [
     {file = "python_json_logger-2.0.2-py3-none-any.whl", hash = "sha256:99310d148f054e858cd5f4258794ed6777e7ad2c3fd7e1c1b527f1cba4d08420"},
 ]
 python-semantic-release = [
-    {file = "python-semantic-release-7.23.0.tar.gz", hash = "sha256:48c33bf671dafa1257e7d955543856eb98486a3f976f586053556ae180d725da"},
-    {file = "python_semantic_release-7.23.0-py3-none-any.whl", hash = "sha256:5bf7fcdb28e5e9888c9a15a1168afe53302116a6874d818580d4c58db60283ab"},
+    {file = "python-semantic-release-7.25.0.tar.gz", hash = "sha256:12cee174e0a5552772b69c243f028a3a97d33d3b56a9ff281570e2afdcf937b3"},
+    {file = "python_semantic_release-7.25.0-py3-none-any.whl", hash = "sha256:ed1a74fb7bd6bf9d9e3d1d2da6b5288ee910fe805e68b97f67b49ea3cc1717b8"},
 ]
 pywin32 = [
     {file = "pywin32-227-cp27-cp27m-win32.whl", hash = "sha256:371fcc39416d736401f0274dd64c2302728c9e034808e37381b5e1b22be4a6b0"},
