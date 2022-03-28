@@ -44,7 +44,7 @@ python-semantic-release = "^7.22.0"
 pytest = "^6.2.5"
 black = "^21.12b0"
 pylint = "^2.12.2"
-mypy = "^0.910"
+mypy = "^0.942"
 twine = "^3.7.1"
 types-requests = "^2.26.2"
 
