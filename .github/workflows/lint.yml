@@ -14,7 +14,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v1
         with:
-          python-version: '3.8'
+          python-version: '3.x'
       - name: Cache Dependencies
         uses: actions/cache@v1
         with:
@@ -30,8 +30,8 @@ jobs:
           poetry config virtualenvs.create false
           poetry install
       - run: |
-          pylint wdldoc
-          mypy wdldoc --ignore-missing-imports
+          poetry run pylint wdldoc
+          poetry run mypy wdldoc --ignore-missing-imports
   style:
     runs-on: ubuntu-latest
     steps:
