@@ -1,4 +1,4 @@
-name: Mark stale issues and pull requests
+name: wdldoc Mark stale issues and pull requests
 on:
   schedule:
   - cron: "0 0 * * *"
