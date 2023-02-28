@@ -1,4 +1,4 @@
-name: CI
+name: wdldoc CI
 on:
   push:
     branches:
