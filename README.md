@@ -15,6 +15,10 @@
   </p>
 </p>
 
+## Disclaimer
+
+> `wdldoc` is no longer being actively developed, but we (the St. Jude Cloud team) are working on a new and improved WDL documentation generator! Star and follow [the Sprocket repo](https://github.com/stjude-rust-labs/sprocket) where we will be publishing a `sprocket doc` command!
+
 ## 📚 Getting Started
 
 For an example of what the results can look like, check out the [GitHub Pages](https://stjudecloud.github.io/workflows/) for the [St Jude Cloud Workflows](https://github.com/stjudecloud/workflows) repo! The documentation is automatically built for each release using `wdldoc`.
