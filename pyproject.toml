@@ -38,7 +38,7 @@ miniwdl = "^1.2.2"
 logzero = "^1.5.0"
 cachecontrol = {extras = ["filecache"], version = "^0.12.6"}
 requests = "^2.23.0"
-python-semantic-release = "^7.22.0"
+python-semantic-release = ">=7.22,<10.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
