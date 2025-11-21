@@ -17,7 +17,7 @@
 
 ## Disclaimer
 
-> `wdldoc` is no longer being actively developed, but we (the St. Jude Cloud team) are working on a new and improved WDL documentation generator! Star and follow [the Sprocket repo](https://github.com/stjude-rust-labs/sprocket) where we will be publishing a `sprocket doc` command!
+> `wdldoc` is no longer being actively developed. We recommend checking out [the Sprocket repo](https://github.com/stjude-rust-labs/sprocket) where we have published a `sprocket dev doc` command that does what `wdldoc` does but much better!
 
 ## 📚 Getting Started
 
